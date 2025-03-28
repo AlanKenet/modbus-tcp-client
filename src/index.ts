@@ -7,7 +7,8 @@ async function main (): Promise<void> {
     await modbusClient.connect()
     setInterval(async () => {
       try {
-        await modbusClient.readData(12288)
+        await modbusClient.readCoils({ addresses: [512, 513, 514, 515] })
+        console.log('----------')
       } catch (err: any) {
         console.error('Error en lectura periódica:', err)
       }
