@@ -12,12 +12,13 @@ describe('ModbusTcpService', () => {
     service = new ModbusTcpService(mockConfig)
   })
 
-  test('debería crear instancia con configuración correcta', () => {
+  test('Debería crear instancia con configuración correcta', () => {
     expect(service.ip).toBe('192.168.1.100')
     expect(service.port).toBe(502)
+    expect(service.getIsConnected()).toBe(false)
   })
 
-  test('debería instanciar cliente Modbus', () => {
+  test('Debería instanciar cliente Modbus', () => {
     expect(ModbusRTU).toHaveBeenCalledTimes(1)
   })
 })
