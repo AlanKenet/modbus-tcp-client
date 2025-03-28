@@ -11,6 +11,7 @@ export abstract class ModbusService implements ModbusServiceInterface {
 
   abstract connect (): void
   abstract disconnect (): void
-  abstract readData (adress: number): Promise<void>
+  abstract readCoil (adress: number): Promise<void>
+  abstract readCoils ({ addresses, range }: { addresses?: number[], range?: number[] }): Promise<void>
   abstract writeData (data: any): void
 }

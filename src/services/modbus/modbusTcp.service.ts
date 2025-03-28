@@ -25,18 +25,47 @@ export class ModbusTcpService extends ModbusService {
     }
   }
 
-  async readData (adress: number): Promise<void> {
-    if (this.isConnected) {
-      try {
-        const data = await this.modbusClient.readCoils(adress, 1)
-        const currentValue = data.data[0]
-        console.log(currentValue)
-      } catch (err: any) {
-        console.error('Error de lectura:', err.message)
-        this.isConnected = false
-        await this.connect() // Intenta reconectar
-      }
+  async readCoil (address: number): Promise<void> {
+    try {
+      if (!this.isConnected) throw new Error('No connection')
+
+      const data = await this.modbusClient.readCoils(address, 1)
+      const currentValue = data.data[0]
+      console.log(currentValue)
+    } catch (err: any) {
+      console.error('Error de lectura:', err.message)
+      this.isConnected = false
+      console.log('Trying to reconnect')
+      await this.connect()
     }
+  }
+
+  async readCoils ({ addresses, range }: { addresses?: number[], range?: number[] }): Promise<void> {
+    try {
+      if (!this.isConnected) {
+        throw new Error('No connection')
+      }
+      if (addresses != null) {
+        const data: Boolean[] = await Promise.all(addresses.map(async address => {
+          const currentValue = await this.modbusClient.readCoils(address, 1)
+          return currentValue.data[0]
+        }))
+        console.log(data)
+      }
+      if (range != null) {
+        const data: Boolean[] = (await this.modbusClient.readCoils(range[0], range.length)).data
+        console.log(data)
+      }
+    } catch (err: any) {
+      console.error('Error de lectura:', err.message)
+      this.isConnected = false
+      console.log('Trying to reconnect')
+      await this.connect()
+    }
+  }
+
+  forceReadCoils (): void {
+
   }
 
   disconnect (): void {
@@ -45,5 +74,9 @@ export class ModbusTcpService extends ModbusService {
 
   writeData (data: any): void {
     console.log('Escribiendo')
+  }
+
+  getIsConnected (): Boolean {
+    return this.isConnected
   }
 }

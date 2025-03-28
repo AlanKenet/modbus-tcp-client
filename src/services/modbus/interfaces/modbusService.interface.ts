@@ -3,6 +3,7 @@ export interface ModbusServiceInterface {
   port: number
   connect: () => void
   disconnect: () => void
-  readData: (adress: number) => Promise<void>
+  readCoil: (address: number) => Promise<void>
+  readCoils: ({ addresses, range }: { addresses?: number[], range?: number[] }) => Promise<void>
   writeData: (data: any) => void
 }
