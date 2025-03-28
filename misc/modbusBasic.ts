@@ -17,7 +17,7 @@ async function connect (): Promise<void> {
     client.setID(UNIT_ID)
     isConnected = true
     console.log('Conectado al PLC')
-  } catch (err) {
+  } catch (err: any) {
     console.error('Error de conexión:', err.message)
     isConnected = false
     setTimeout(connect, 5000) // Reintenta cada 5 segundos
@@ -41,7 +41,7 @@ async function readRegister (): Promise<void> {
     }
 
     previousValue = currentValue
-  } catch (err) {
+  } catch (err: any) {
     console.error('Error de lectura:', err.message)
     isConnected = false
     await connect() // Intenta reconectar
