@@ -64,10 +64,6 @@ export class ModbusTcpService extends ModbusService {
     }
   }
 
-  forceReadCoils (): void {
-
-  }
-
   disconnect (): void {
     console.log('deconectando')
   }
