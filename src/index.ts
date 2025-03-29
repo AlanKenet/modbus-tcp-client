@@ -1,22 +1,18 @@
-import { ModbusTcpService } from './services/modbus/modbusTcp.service'
+import express from 'express'
 
-const modbusClient = new ModbusTcpService({ ip: '192.168.100.30', port: 502 })
+import indexRoutes from './routes/index.routes'
 
-async function main (): Promise<void> {
-  try {
-    await modbusClient.connect()
-    setInterval(async () => {
-      try {
-        await modbusClient.readCoils({ addresses: [512, 513, 514, 515] })
-        console.log('----------')
-      } catch (err: any) {
-        console.error('Error en lectura periódica:', err)
-      }
-    }, 1000)
-  } catch (err) {
-    console.error('Error inicial:', err)
-    process.exit(1)
-  }
-}
+const app = express()
 
-main().catch(console.error)
+app.use(express.json())
+
+app.use(indexRoutes)
+
+app.use((_req, res, _next) => {
+  res.status(404).json({
+    message: 'Endpoint not found'
+  })
+})
+
+app.listen(5656)
+console.log('Server running on port 5656')
