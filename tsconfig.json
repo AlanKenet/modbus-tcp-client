@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2016",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "outDir": "./build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -11,6 +12,12 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@routes/*": [
+        "src/routes/*"
+      ],
+      "@controllers/*": [
+        "src/controllers/*"
       ],
       "@root/*": [
         "*"
