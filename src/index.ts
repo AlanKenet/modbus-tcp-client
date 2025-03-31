@@ -2,7 +2,7 @@ import express from 'express'
 import http from 'http'
 import { setUpSocketIo } from './sockets/index.socket'
 
-import { config } from './config'
+import { config } from './configs/env.config'
 
 import indexRoutes from './routes/index.routes'
 import liveRoutes from './routes/live.routes'
