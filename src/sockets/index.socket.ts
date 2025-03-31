@@ -10,7 +10,7 @@ export const setUpSocketIo: any = (server: any) => {
       console.log('Received message from client:', data)
 
       socket.emit('serverMessage', 'Message received!')
-      socket.emit('chatMessage', data)
+      io.emit('chatMessage', data)
     })
 
     socket.on('disconnect', () => {
