@@ -25,7 +25,6 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io('/live/monitor');
-    const server = io()
   
     const messages = document.getElementById('messages')
 
@@ -38,10 +37,6 @@
     })
 
     socket.on('message', (msg) => {
-      console.log(msg)
-    })
-
-    server.on('temperature', (msg) => {
       console.log(msg)
     })
 
@@ -58,5 +53,9 @@
     messages.appendChild(item)
     window.scrollTo(0, document.body.scrollHeight)
   })
+
+  socket.on('connect', () => {
+      console.log('Conectado al servidor con ID:', socket.id);
+    });
   </script>
 </html>
